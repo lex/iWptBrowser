@@ -94,6 +94,13 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
   open override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
     get {
+      // X/XS/XS Max/XR don't support .portraitUpsideDown
+      if #available(iOS 11.0,  *) {
+        if (UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20) {
+          return .portrait
+        }
+      }
+
       if self.isLandscape {
         return .landscapeRight
       } else {
